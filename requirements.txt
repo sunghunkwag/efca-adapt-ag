@@ -1,31 +1,139 @@
+# ============================================================================
+# EFCA-ADAPT-AG Requirements
+# ============================================================================
+# This file lists all Python dependencies for the EFCA-ADAPT-AG project.
+# 
+# Installation:
+#   pip install -r requirements.txt
+#
+# For development with extras:
+#   pip install -r requirements.txt && pip install -e .[dev]
+#
+# For GPU support (CUDA):
+#   See the CUDA/ROCm section below for GPU-specific installations
+# ============================================================================
+
+# ----------------------------------------------------------------------------
 # Core Deep Learning & RL Dependencies
+# ----------------------------------------------------------------------------
 torch>=2.0.0
 torchvision>=0.15.0
 numpy>=1.24.0
-gymnasium>=0.29.0
-stable-baselines3>=2.0.0
+gymnasium>=0.29.0  # Modern replacement for OpenAI Gym
+stable-baselines3>=2.0.0  # PPO and other RL algorithms
 
+# ----------------------------------------------------------------------------
 # MAML (Model-Agnostic Meta-Learning)
-learn2learn>=0.2.0
+# ----------------------------------------------------------------------------
+learn2learn>=0.2.0  # Meta-learning library built on PyTorch
 
+# ----------------------------------------------------------------------------
 # Utilities
-tensorboard>=2.13.0
-wandb>=0.15.0
-pyyaml>=6.0
-tqdm>=4.65.0
+# ----------------------------------------------------------------------------
+tensorboard>=2.13.0  # Visualization and experiment tracking
+wandb>=0.15.0  # Weights & Biases for experiment tracking
+pyyaml>=6.0  # YAML configuration file parsing
+tqdm>=4.65.0  # Progress bars for training loops
 
+# ----------------------------------------------------------------------------
 # Testing & Code Quality
-pytest>=7.4.0
-pytest-cov>=4.1.0
-black>=23.7.0
-flake8>=6.1.0
-mypy>=1.5.0
+# ----------------------------------------------------------------------------
+pytest>=7.4.0  # Testing framework
+pytest-cov>=4.1.0  # Code coverage plugin for pytest
+black>=23.7.0  # Code formatter
+flake8>=6.1.0  # Linting and style checking
+mypy>=1.5.0  # Static type checking
 
+# ----------------------------------------------------------------------------
 # Service & API
-fastapi>=0.100.0
-uvicorn>=0.23.0
-pydantic>=2.0.0
+# ----------------------------------------------------------------------------
+fastapi>=0.100.0  # Modern web framework for building APIs
+uvicorn>=0.23.0  # ASGI server for FastAPI
+pydantic>=2.0.0  # Data validation using Python type annotations
+python-multipart>=0.0.6  # For handling file uploads in FastAPI
 
+# ----------------------------------------------------------------------------
 # Monitoring & Logging
-prometheus-client>=0.17.0
-rich>=13.5.0
+# ----------------------------------------------------------------------------
+prometheus-client>=0.17.0  # Metrics collection and monitoring
+rich>=13.5.0  # Beautiful terminal output and logging
+
+# ============================================================================
+# OPTIONAL EXTRAS (extras_require)
+# ============================================================================
+# These can be installed via setup.py or pyproject.toml as optional extras:
+#
+# [dev] - Development dependencies:
+#   pip install -e .[dev]
+#   Includes: pytest, black, flake8, mypy, pytest-cov, pre-commit
+#
+# [docs] - Documentation dependencies:
+#   pip install -e .[docs]
+#   Includes: sphinx, sphinx-rtd-theme, sphinx-autodoc-typehints
+#
+# [all] - All optional dependencies:
+#   pip install -e .[all]
+#
+# Example setup.py extras_require configuration:
+# extras_require = {
+#     'dev': ['pytest>=7.4.0', 'black>=23.7.0', 'flake8>=6.1.0', 'mypy>=1.5.0'],
+#     'docs': ['sphinx>=7.0.0', 'sphinx-rtd-theme>=1.3.0'],
+#     'all': ['pytest>=7.4.0', 'black>=23.7.0', 'sphinx>=7.0.0'],
+# }
+# ============================================================================
+
+# ============================================================================
+# GPU ACCELERATION: CUDA / ROCm Support
+# ============================================================================
+# 
+# IMPORTANT: PyTorch with GPU support requires special installation steps.
+# The default 'torch' package from PyPI is CPU-only.
+#
+# ----------------------------------------------------------------------------
+# CUDA (NVIDIA GPUs)
+# ----------------------------------------------------------------------------
+# For CUDA 11.8:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+#
+# For CUDA 12.1:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+#
+# For the latest CUDA version, visit:
+#   https://pytorch.org/get-started/locally/
+#
+# Verify CUDA installation:
+#   python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
+#   python -c "import torch; print(f'CUDA version: {torch.version.cuda}')"
+#
+# ----------------------------------------------------------------------------
+# ROCm (AMD GPUs)
+# ----------------------------------------------------------------------------
+# For ROCm 5.7:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/rocm5.7
+#
+# For ROCm 6.0:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/rocm6.0
+#
+# For the latest ROCm version, visit:
+#   https://pytorch.org/get-started/locally/
+#
+# Verify ROCm installation:
+#   python -c "import torch; print(f'ROCm available: {torch.cuda.is_available()}')"
+#   python -c "import torch; print(f'HIP version: {torch.version.hip}')"
+#
+# ----------------------------------------------------------------------------
+# Apple Silicon (M1/M2/M3 Macs)
+# ----------------------------------------------------------------------------
+# PyTorch with Metal Performance Shaders (MPS) backend:
+#   pip install torch torchvision
+#
+# Verify MPS installation:
+#   python -c "import torch; print(f'MPS available: {torch.backends.mps.is_available()}')"
+#
+# ----------------------------------------------------------------------------
+# Notes:
+# - GPU drivers must be installed separately (NVIDIA Driver / AMD Driver)
+# - For multi-GPU setups, ensure NCCL (NVIDIA) or RCCL (AMD) is properly configured
+# - Memory requirements: Recommend at least 8GB VRAM for training
+# - For distributed training, consider installing: torch.distributed, horovod
+# ============================================================================
