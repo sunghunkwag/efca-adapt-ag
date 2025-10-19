@@ -1,0 +1,88 @@
+# Default Configuration for EFCA-Adapt-AG
+# This file contains all configurable parameters for the application
+
+# Server Configuration
+server:
+  host: "0.0.0.0"
+  port: 8000
+  reload: false
+  workers: 4
+  log_level: "info"
+
+# Model Configuration
+model:
+  name: "gpt-4"
+  temperature: 0.7
+  max_tokens: 2048
+  top_p: 0.9
+  frequency_penalty: 0.0
+  presence_penalty: 0.0
+  timeout: 60
+
+# API Configuration
+api:
+  rate_limit: 100  # requests per minute
+  max_retries: 3
+  retry_delay: 1.0  # seconds
+  enable_cors: true
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8080"
+
+# Database Configuration (if applicable)
+database:
+  type: "sqlite"  # Options: sqlite, postgresql, mysql
+  path: "./data/app.db"  # for SQLite
+  # host: "localhost"  # for PostgreSQL/MySQL
+  # port: 5432  # for PostgreSQL
+  # username: "user"
+  # password: "password"
+  # database: "efca_adapt"
+  pool_size: 10
+  max_overflow: 20
+
+# Logging Configuration
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "./logs/app.log"
+  max_bytes: 10485760  # 10MB
+  backup_count: 5
+  console_output: true
+
+# Processing Configuration
+processing:
+  batch_size: 32
+  max_queue_size: 1000
+  timeout: 300  # seconds
+  enable_async: true
+  num_workers: 4
+
+# Feature Flags
+features:
+  enable_caching: true
+  enable_metrics: true
+  enable_tracing: false
+  enable_debugging: false
+
+# Cache Configuration
+cache:
+  type: "memory"  # Options: memory, redis, memcached
+  ttl: 3600  # seconds
+  max_size: 1000  # maximum number of items
+  # redis_url: "redis://localhost:6379/0"  # for Redis
+
+# Security Configuration
+security:
+  enable_auth: false
+  api_key_header: "X-API-Key"
+  secret_key: "your-secret-key-here-change-in-production"
+  algorithm: "HS256"
+  access_token_expire_minutes: 30
+
+# Monitoring Configuration
+monitoring:
+  enable_health_check: true
+  health_check_path: "/health"
+  metrics_path: "/metrics"
+  enable_profiling: false
